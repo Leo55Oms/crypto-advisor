@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZBA INVEST - Крипто-Советник</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>IZBA INVEST</span>
+            </div>
+            <div class="system-status">
+                <div class="status-indicator" id="quantAnalysis">
+                    <div class="status-dot active"></div>
+                    <span>Квантовый Анализ</span>
+                    <small>94.2%</small>
+                </div>
+                <div class="status-indicator" id="sentimentAnalysis">
+                    <div class="status-dot active"></div>
+                    <span>Сентимент Анализ</span>
+                    <small>89.7%</small>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="mode-toggle">
+                <span class="mode-label">Режим:</span>
+                <div class="toggle-switch" id="paperTrading">
+                    <input type="checkbox" id="paperToggle" checked>
+                    <label for="paperToggle">Бумажная торговля</label>
+                </div>
+            </div>
+            <div class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>Пользователь</span>
+                <i class="fas fa-cog settings-icon" id="settingsBtn"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-navigation">
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Дашборд</span>
+            </button>
+            <button class="tab-btn" data-tab="active-trades">
+                <i class="fas fa-chart-line"></i>
+                <span>Активные сделки</span>
+                <span class="trade-count">5</span>
+            </button>
+            <button class="tab-btn" data-tab="strategy-testing">
+                <i class="fas fa-flask"></i>
+                <span>Тестирование стратегий</span>
+            </button>
+            <button class="tab-btn" data-tab="trade-history">
+                <i class="fas fa-history"></i>
+                <span>История сделок</span>
+                <span class="history-count">67</span>
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-cog"></i>
+                <span>Настройки</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Tab Content Container -->
+    <div class="tab-content-container">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard-content">
+            <main class="dashboard">
+                
+                <!-- Multi-Timeframe Analysis Widget -->
+<div class="timeframe-analysis-widget">
+    <h3><i class="fas fa-clock"></i> Мульти-таймфрейм анализ: <span id="selectedPairHeader">BTC/USDT</span></h3>
+    
+    <div class="asset-selector-wrapper">
+        <label>Выбор актива для анализа:</label>
+        <select id="assetSelector">
+            <option value="BTC_USDT">BTC/USDT - Bitcoin</option>
+            <option value="ETH_USDT">ETH/USDT - Ethereum</option>
+            <option value="SOL_USDT">SOL/USDT - Solana</option>
+            <option value="ADA_USDT">ADA/USDT - Cardano</option>
+        </select>
+    </div>
+    
+    <table class="timeframe-table">
+        <thead>
+            <tr>
+                <th>Таймфрейм</th>
+                <th>Оценка</th>
+                <th>Сигнал</th>
+                <th>Сила</th>
+            </tr>
+        </thead>
+        <tbody id="timeframeTableBody">
+            <!-- Данные заполняются JavaScript -->
+        </tbody>
+    </table>
+    
+    <div class="ai-recommendation-block" id="aiRecommendation">
+        <!-- Рекомендация заполняется JavaScript -->
+    </div>
+    
+    <div class="timeframe-legend">
+        <span>🔵 <strong>1-5 минут</strong> — для точного входа в позицию, скальпинг</span>
+        <span>🟢 <strong>1-4 часа</strong> — определяют основное направление тренда</span>
+        <span>🟣 <strong>1 день+</strong> — показывают долгосрочный тренд рынка</span>
+    </div>
+</div>
+        <!-- Left Panel - AI Market Scanner & Trading Opportunities -->
+        <section class="trading-opportunities">
+            <!-- AI Market Scanner Section -->
+            <div class="ai-scanner-section" id="aiScannerSection">
+                <div class="scanner-header">
+                    <h3><i class="fas fa-brain"></i> AI сканирует рынок...</h3>
+                    <div class="scanner-status">
+                        <div class="scanning-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="scanProgress" style="width: 83%"></div>
+                            </div>
+                            <span class="progress-text" id="scanProgressText">Анализируется: 1247/1500 пар (83%)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filtering-funnel" id="filteringFunnel">
+                    <div class="funnel-stage">
+                        <div class="stage-number">1</div>
+                        <div class="stage-info">
+                            <div class="stage-name">Технический анализ</div>
+                            <div class="stage-flow">1,500 пар → 127 пар</div>
+                            <div class="stage-status active">✓ Паттерны, уровни поддержки/сопротивления</div>
+                        </div>
+                    </div>
+                    
+                    <div class="funnel-stage">
+                        <div class="stage-number">2</div>
+                        <div class="stage-info">
+                            <div class="stage-name">Анализ объемов</div>
+                            <div class="stage-flow">127 пар → 43 пары</div>
+                            <div class="stage-status active">✓ Ликвидность, аномальные объемы</div>
+                        </div>
+                    </div>
+                    
+                    <div class="funnel-stage">
+                        <div class="stage-number">3</div>
+                        <div class="stage-info">
+                            <div class="stage-name">Анализ настроений</div>
+                            <div class="stage-flow">43 пары → 18 пар</div>
+                            <div class="stage-status active">✓ Новости, социальные сети</div>
+                        </div>
+                    </div>
+                    
+                    <div class="funnel-stage">
+                        <div class="stage-number">4</div>
+                        <div class="stage-info">
+                            <div class="stage-name">Оценка рисков</div>
+                            <div class="stage-flow">18 пар → 8 пар</div>
+                            <div class="stage-status active">✓ Волатильность, корреляции</div>
+                        </div>
+                    </div>
+                    
+                    <div class="funnel-stage">
+                        <div class="stage-number">5</div>
+                        <div class="stage-info">
+                            <div class="stage-name">Финальный рейтинг</div>
+                            <div class="stage-flow">8 пар → 5 пар</div>
+                            <div class="stage-status final">🎯 ИИ-скоринг, приоритизация</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="market-overview" id="marketOverview">
+                    <div class="overview-header">
+                        <h4>Обзор рынка</h4>
+                        <div class="last-update" id="lastUpdate">Последнее обновление: 23 сек назад</div>
+                    </div>
+                    <div class="overview-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Всего пар:</span>
+                            <span class="stat-value">1,500+</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Найдено возможностей:</span>
+                            <span class="stat-value highlight">5 из 1,500 (0.33%)</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Настроение рынка:</span>
+                            <span class="stat-value bullish">Bullish</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Волатильность:</span>
+                            <span class="stat-value">Medium</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Новостной фон:</span>
+                            <span class="stat-value">Low</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scanning-feed" id="scanningFeed">
+                    <div class="feed-header">
+                        <h4>Анализ в реальном времени</h4>
+                        <div class="feed-controls">
+                            <button class="feed-control-btn" onclick="toggleScanningFeed()">
+                                <i class="fas fa-pause" id="feedToggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="feed-content" id="feedContent">
+                        <!-- Real-time scanning items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="panel-header">
+                <h2><i class="fas fa-rocket"></i> Торговые возможности</h2>
+                <div class="refresh-btn" id="refreshOpportunities">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+            </div>
+            <div class="opportunities-container" id="opportunitiesContainer">
+                <!-- Trading cards will be populated by JavaScript -->
+            </div>
+            <div class="market-chart-container">
+                <canvas id="marketChart" width="400" height="200"></canvas>
+            </div>
+        </section>
+
+        <!-- Center Panel - AI Intelligence Core -->
+        <section class="ai-intelligence">
+            
+            <!-- Portfolio Correlation Matrix -->
+            <div class="correlation-matrix-section">
+                <h3><i class="fas fa-project-diagram"></i> Корреляционная матрица портфеля</h3>
+                <div class="correlation-matrix" id="correlationMatrix">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Kelly Criterion Calculator -->
+            <div class="kelly-criterion-section">
+                <h3><i class="fas fa-calculator"></i> Калькулятор Келли</h3>
+                <div class="kelly-stats">
+                    <div class="kelly-item">
+                        <span class="kelly-label">Рекомендуемый размер:</span>
+                        <span class="kelly-value" id="kellyRecommended">2.3%</span>
+                    </div>
+                    <div class="kelly-item">
+                        <span class="kelly-label">Макс. безопасный размер:</span>
+                        <span class="kelly-value" id="kellyMaxSafe">4.1%</span>
+                    </div>
+                    <div class="kelly-item">
+                        <span class="kelly-label">Текущий риск:</span>
+                        <span class="kelly-status optimal" id="kellyRisk">Оптимальный</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-header">
+                <h2><i class="fas fa-brain"></i> Алгоритмический Интеллект</h2>
+                <div class="ai-status">
+                    <div class="ai-score" id="aiScore">92.7%</div>
+                </div>
+            </div>
+            <div class="ai-content">
+                <div class="ai-reasoning" id="aiReasoning">
+                    <h3>Анализ рынка</h3>
+                    <div class="reasoning-item">
+                        <div class="icon"><i class="fas fa-chart-bar"></i></div>
+                        <div class="text">
+                            <strong>Технический анализ:</strong> Обнаружен прорыв уровня сопротивления на BTC/USDT с подтверждением объемов
+                        </div>
+                    </div>
+                    <div class="reasoning-item">
+                        <div class="icon"><i class="fas fa-newspaper"></i></div>
+                        <div class="text">
+                            <strong>Сентимент:</strong> Позитивные новости от институциональных инвесторов, индекс страха и жадности: 72
+                        </div>
+                    </div>
+                    <div class="reasoning-item">
+                        <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="text">
+                            <strong>Риск-менеджмент:</strong> Текущая экспозиция портфеля: 45%, рекомендуется увеличение до 60%
+                        </div>
+                    </div>
+                </div>
+                <div class="performance-metrics">
+                    <h3>Показатели эффективности</h3>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="metric-value">91.5%</span>
+                            <span class="metric-label">Успешность сделок</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">+324.67</span>
+                            <span class="metric-label">Прибыль за день</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">47</span>
+                            <span class="metric-label">Всего сделок</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel - Controls and Status -->
+        <section class="controls-panel">
+            
+            <!-- Trading Psychology Module -->
+            <div class="psychology-module">
+                <h3><i class="fas fa-brain"></i> Психология трейдинга</h3>
+                <div class="mood-tracker">
+                    <div class="current-mood">
+                        <span class="mood-label">Текущее настроение:</span>
+                        <span class="mood-value confident" id="currentMood">Уверенный</span>
+                    </div>
+                    <div class="stress-meter">
+                        <span class="stress-label">Уровень стресса:</span>
+                        <div class="stress-bar">
+                            <div class="stress-fill" style="width: 30%" id="stressFill"></div>
+                        </div>
+                        <span class="stress-value" id="stressValue">3/10</span>
+                    </div>
+                    <div class="recent-emotions">
+                        <span class="emotions-label">Недавние эмоции:</span>
+                        <div class="emotion-tags" id="emotionTags">
+                            <span class="emotion-tag">FOMO</span>
+                            <span class="emotion-tag confident">Уверенность</span>
+                            <span class="emotion-tag">Аналитический</span>
+                        </div>
+                    </div>
+                    <button class="btn secondary full-width" id="mindfulnessBtn">
+                        <i class="fas fa-meditation"></i> Медитация перед сделкой
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Portfolio Heat Map -->
+            <div class="portfolio-heatmap">
+                <h3><i class="fas fa-th"></i> Карта рисков портфеля</h3>
+                <div class="heatmap-grid" id="portfolioHeatmap">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="panel-header">
+                <h2><i class="fas fa-sliders-h"></i> Управление</h2>
+            </div>
+            
+            <div class="account-status">
+                <h3>Статус аккаунта</h3>
+                <div class="balance-info">
+                    <div class="balance-main">
+                        <span class="balance-value" id="balance">10,247.83</span>
+                        <span class="balance-currency">USDT</span>
+                    </div>
+                    <div class="balance-change positive" id="dailyPnl">+324.67 USDT</div>
+                </div>
+                <div class="account-stats">
+                    <div class="stat">
+                        <span class="stat-label">Открытые позиции:</span>
+                        <span class="stat-value" id="openPositions">3</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Успешность:</span>
+                        <span class="stat-value" id="successRate">91.5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="risk-management">
+                <h3>Системные настройки</h3>
+                <div class="risk-controls">
+                    <div class="control-group">
+                        <label>Макс. дневной убыток:</label>
+                        <input type="range" id="maxDailyLoss" min="1" max="20" value="5" class="slider">
+                        <span class="value-display">5%</span>
+                    </div>
+                    <div class="control-group">
+                        <label>Макс. позиций одновременно:</label>
+                        <input type="range" id="maxPositions" min="1" max="10" value="5" class="slider">
+                        <span class="value-display">5</span>
+                    </div>
+                </div>
+                <div class="auto-trading-toggle">
+                    <div class="toggle-switch large">
+                        <input type="checkbox" id="autoTrading">
+                        <label for="autoTrading">
+                            <i class="fas fa-robot"></i>
+                            Автоматическая торговля
+                        </label>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; padding: 1rem; background: var(--tertiary-bg); border-radius: 6px; border-left: 3px solid var(--accent-blue);">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+                        <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                        <strong>Индивидуальные настройки:</strong> Каждая сделка теперь имеет собственные параметры риска. Настраивайте каждую возможность индивидуально для максимальной гибкости.
+                    </p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Быстрые действия</h3>
+                <button class="action-btn primary" id="startTradingBtn">
+                    <i class="fas fa-play"></i>
+                    Начать торговлю
+                </button>
+                <button class="action-btn secondary" id="stopAllBtn">
+                    <i class="fas fa-stop"></i>
+                    Остановить всё
+                </button>
+                <button class="action-btn" id="historyBtn">
+                    <i class="fas fa-history"></i>
+                    История сделок
+                </button>
+            </div>
+        </section>
+            
+            <!-- Advanced Analytics Dashboard -->
+            <section class="analytics-dashboard">
+                <h2><i class="fas fa-chart-area"></i> Расширенная аналитика</h2>
+                
+                <!-- Performance Metrics -->
+                <div class="performance-metrics-grid">
+                    <div class="metric-card">
+                        <h4>Коэффициент Шарпа</h4>
+                        <div class="metric-value" id="sharpeRatio">1.87</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Коэффициент Сортино</h4>
+                        <div class="metric-value" id="sortinoRatio">2.34</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Коэффициент Калмара</h4>
+                        <div class="metric-value" id="calmarRatio">1.45</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Альфа</h4>
+                        <div class="metric-value" id="alphaValue">0.23</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Бета</h4>
+                        <div class="metric-value" id="betaValue">0.78</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Превышение HODL</h4>
+                        <div class="metric-value positive" id="hodlExcess">+15.4%</div>
+                    </div>
+                </div>
+                
+                <!-- Monte Carlo Simulation -->
+                <div class="monte-carlo-section">
+                    <h3><i class="fas fa-dice"></i> Моделирование Монте-Карло</h3>
+                    <div class="monte-carlo-results">
+                        <div class="mc-result">
+                            <span class="mc-label">Сценариев обработано:</span>
+                            <span class="mc-value">10,000</span>
+                        </div>
+                        <div class="mc-result">
+                            <span class="mc-label">95% доверительный интервал:</span>
+                            <span class="mc-value positive">+2,847 USDT</span>
+                        </div>
+                        <div class="mc-result">
+                            <span class="mc-label">Ожидаемая доходность:</span>
+                            <span class="mc-value positive">+3,456 USDT</span>
+                        </div>
+                        <div class="mc-result">
+                            <span class="mc-label">Вероятность прибыли:</span>
+                            <span class="mc-value">73%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- External Data Feeds -->
+                <div class="external-data-section">
+                    <h3><i class="fas fa-rss"></i> Внешние данные</h3>
+                    <div class="data-feeds">
+                        <div class="feed-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <span class="feed-label">Следующий FOMC:</span>
+                                <span class="feed-value">2024-01-31</span>
+                                <span class="impact-level high">Высокое влияние</span>
+                            </div>
+                        </div>
+                        <div class="feed-item">
+                            <i class="fas fa-whale"></i>
+                            <div>
+                                <span class="feed-label">Крупные транзакции:</span>
+                                <span class="feed-value">12.5M USDT</span>
+                                <span class="whale-count">3 алерта</span>
+                            </div>
+                        </div>
+                        <div class="feed-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <span class="feed-label">Индекс страха и жадности:</span>
+                                <span class="feed-value">68</span>
+                                <span class="sentiment-indicator bullish">Бычий</span>
+                            </div>
+                        </div>
+                        <div class="feed-item">
+                            <i class="fab fa-google"></i>
+                            <div>
+                                <span class="feed-label">Google Trends:</span>
+                                <span class="feed-value">87/100</span>
+                                <span class="trend-indicator rising">Рост</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            </main>
+        </div>
+
+        <!-- Advanced Order Types Tab -->
+        <div class="tab-content" id="advanced-orders-content">
+            <div class="advanced-orders-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-cogs"></i> Продвинутые типы ордеров</h1>
+                </div>
+                
+                <div class="order-types-grid">
+                    <div class="order-type-card">
+                        <h3><i class="fas fa-arrows-alt-v"></i> Trailing Stop</h3>
+                        <div class="order-form">
+                            <div class="form-group">
+                                <label>Пара:</label>
+                                <select class="form-control">
+                                    <option>BTC/USDT</option>
+                                    <option>ETH/USDT</option>
+                                    <option>SOL/USDT</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Дистанция (%):</label>
+                                <input type="number" class="form-control" value="2.5" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label>Шаг обновления (%):</label>
+                                <input type="number" class="form-control" value="0.5" step="0.1">
+                            </div>
+                            <button class="btn primary">Создать Trailing Stop</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-type-card">
+                        <h3><i class="fas fa-exchange-alt"></i> OCO Ордер</h3>
+                        <div class="order-form">
+                            <div class="form-group">
+                                <label>Take Profit:</label>
+                                <input type="number" class="form-control" placeholder="Цена">
+                            </div>
+                            <div class="form-group">
+                                <label>Stop Loss:</label>
+                                <input type="number" class="form-control" placeholder="Цена">
+                            </div>
+                            <div class="form-group">
+                                <label>Количество:</label>
+                                <input type="number" class="form-control" placeholder="Размер">
+                            </div>
+                            <button class="btn primary">Создать OCO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-type-card">
+                        <h3><i class="fas fa-layer-group"></i> Iceberg Order</h3>
+                        <div class="order-form">
+                            <div class="form-group">
+                                <label>Общий объем:</label>
+                                <input type="number" class="form-control" placeholder="Полный размер">
+                            </div>
+                            <div class="form-group">
+                                <label>Размер видимой части:</label>
+                                <input type="number" class="form-control" placeholder="Видимый размер">
+                            </div>
+                            <div class="form-group">
+                                <label>Интервал (сек):</label>
+                                <input type="number" class="form-control" value="30">
+                            </div>
+                            <button class="btn primary">Создать Iceberg</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-type-card">
+                        <h3><i class="fas fa-chart-bar"></i> TWAP/VWAP</h3>
+                        <div class="order-form">
+                            <div class="form-group">
+                                <label>Тип:</label>
+                                <select class="form-control">
+                                    <option>TWAP</option>
+                                    <option>VWAP</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Период (мин):</label>
+                                <input type="number" class="form-control" value="60">
+                            </div>
+                            <div class="form-group">
+                                <label>Макс. участие (%):</label>
+                                <input type="number" class="form-control" value="10">
+                            </div>
+                            <button class="btn primary">Запустить TWAP/VWAP</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="active-advanced-orders">
+                    <h3>Активные продвинутые ордера</h3>
+                    <div class="advanced-orders-list" id="advancedOrdersList">
+                        <div class="advanced-order-item">
+                            <div class="order-info">
+                                <span class="order-type">Trailing Stop</span>
+                                <span class="order-pair">BTC/USDT</span>
+                                <span class="order-status active">Активен</span>
+                            </div>
+                            <div class="order-details">
+                                <span>Дистанция: 2.5% | Текущий стоп: $66,200</span>
+                            </div>
+                            <button class="btn secondary small">Отменить</button>
+                        </div>
+                        
+                        <div class="advanced-order-item">
+                            <div class="order-info">
+                                <span class="order-type">OCO</span>
+                                <span class="order-pair">ETH/USDT</span>
+                                <span class="order-status active">Активен</span>
+                            </div>
+                            <div class="order-details">
+                                <span>TP: $2,750 | SL: $2,600</span>
+                            </div>
+                            <button class="btn secondary small">Отменить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Active Trades Tab -->
+        <div class="tab-content" id="active-trades-content">
+            <div class="active-trades-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-chart-line"></i> Активные сделки</h1>
+                    <div class="header-actions">
+                        <button class="btn secondary" id="refreshTrades">
+                            <i class="fas fa-sync-alt"></i> Обновить
+                        </button>
+                        <button class="btn primary" id="closeAllTrades">
+                            <i class="fas fa-times-circle"></i> Закрыть все
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="trades-summary">
+                    <div class="summary-card">
+                        <div class="summary-value positive" id="totalPnl">+22.03 USDT</div>
+                        <div class="summary-label">Общий P&L</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value" id="totalVolume">15,234.67 USDT</div>
+                        <div class="summary-label">Общий объем</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value" id="avgHoldTime">1h 32m</div>
+                        <div class="summary-label">Среднее время удержания</div>
+                    </div>
+                </div>
+                
+                <div class="trades-container" id="tradesContainer">
+                    <!-- Active trades will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Testing Tab -->
+        <div class="tab-content" id="strategy-testing-content">
+            <div class="strategy-testing-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-flask"></i> Тестирование стратегий</h1>
+                </div>
+                
+                <div class="testing-container">
+                    <div class="testing-controls">
+                        <div class="control-panel">
+                            <h3>Параметры тестирования</h3>
+                            
+                            <div class="form-group">
+                                <label>Стратегия:</label>
+                                <select id="strategySelect" class="form-control">
+                                    <option value="breakout">Breakout Pattern</option>
+                                    <option value="support-bounce">Support/Resistance Bounce</option>
+                                    <option value="momentum">Momentum Trading</option>
+                                    <option value="mean-reversion">Mean Reversion</option>
+                                    <option value="trend-following">Trend Following</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Начальная дата:</label>
+                                    <input type="date" id="startDate" class="form-control" value="2024-01-01">
+                                </div>
+                                <div class="form-group">
+                                    <label>Конечная дата:</label>
+                                    <input type="date" id="endDate" class="form-control" value="2024-12-31">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Начальный капитал:</label>
+                                    <input type="number" id="initialCapital" class="form-control" value="10000" min="1000">
+                                </div>
+                                <div class="form-group">
+                                    <label>Риск на сделку (%):</label>
+                                    <input type="number" id="riskPerTradeTest" class="form-control" value="2" min="0.1" max="10" step="0.1">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Торговые пары:</label>
+                                <div class="pairs-selection">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="BTC/USDT" checked> BTC/USDT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="ETH/USDT" checked> ETH/USDT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="SOL/USDT" checked> SOL/USDT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="ADA/USDT"> ADA/USDT
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button class="btn primary full-width" id="runBacktest">
+                                <i class="fas fa-play"></i> Запустить тест
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="testing-results" id="testingResults">
+                        <div class="results-placeholder">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Результаты тестирования</h3>
+                            <p>Выберите параметры и запустите тест для просмотра результатов</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trade History Tab -->
+        <div class="tab-content" id="trade-history-content">
+            <div class="trade-history-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-history"></i> История сделок</h1>
+                    <div class="header-actions">
+                        <button class="btn secondary" id="exportHistoryBtn">
+                            <i class="fas fa-download"></i> Экспорт
+                        </button>
+                        <button class="btn secondary" id="refreshHistoryBtn">
+                            <i class="fas fa-sync-alt"></i> Обновить
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="history-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalCompletedTrades">67</div>
+                        <div class="stat-label">Всего сделок</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value positive" id="winRatePercent">67.2%</div>
+                        <div class="stat-label">Процент прибыльных</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value positive" id="totalProfitHistory">+1,247.83 USDT</div>
+                        <div class="stat-label">Общая прибыль</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgWinAmount">+42.15 USDT</div>
+                        <div class="stat-label">Средняя прибыль</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value danger" id="avgLossAmount">-23.67 USDT</div>
+                        <div class="stat-label">Средний убыток</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="profitFactor">2.31</div>
+                        <div class="stat-label">Фактор прибыли</div>
+                    </div>
+                </div>
+                
+                <div class="history-filters">
+                    <div class="filter-group">
+                        <label>Период:</label>
+                        <select id="historyPeriodFilter" class="form-control">
+                            <option value="all">Все время</option>
+                            <option value="today">Сегодня</option>
+                            <option value="week">Неделя</option>
+                            <option value="month" selected>Месяц</option>
+                            <option value="quarter">Квартал</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Валютная пара:</label>
+                        <select id="historyPairFilter" class="form-control">
+                            <option value="all">Все пары</option>
+                            <option value="BTC/USDT">BTC/USDT</option>
+                            <option value="ETH/USDT">ETH/USDT</option>
+                            <option value="SOL/USDT">SOL/USDT</option>
+                            <option value="ADA/USDT">ADA/USDT</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Стратегия:</label>
+                        <select id="historyStrategyFilter" class="form-control">
+                            <option value="all">Все стратегии</option>
+                            <option value="Breakout Pattern">Breakout Pattern</option>
+                            <option value="Support Bounce">Support Bounce</option>
+                            <option value="Momentum Trade">Momentum Trade</option>
+                            <option value="Mean Reversion">Mean Reversion</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Результат:</label>
+                        <select id="historyResultFilter" class="form-control">
+                            <option value="all">Все результаты</option>
+                            <option value="profitable">Прибыльные</option>
+                            <option value="losing">Убыточные</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="history-container" id="historyContainer">
+                    <!-- Trade history will be populated by JavaScript -->
+                </div>
+                
+                <div class="performance-charts">
+                    <div class="chart-section">
+                        <h3>Динамика прибыли</h3>
+                        <canvas id="profitChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-section">
+                        <h3>Распределение по стратегиям</h3>
+                        <canvas id="strategyChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Tab -->
+        <div class="tab-content" id="security-content">
+            <div class="security-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-shield-alt"></i> Безопасность</h1>
+                </div>
+                
+                <div class="security-container">
+                    <div class="security-group">
+                        <h3>Статус безопасности</h3>
+                        <div class="security-status">
+                            <div class="status-item">
+                                <i class="fas fa-usb security-icon connected"></i>
+                                <div>
+                                    <span class="status-label">Аппаратный кошелек:</span>
+                                    <span class="status-value connected">Подключен</span>
+                                </div>
+                            </div>
+                            <div class="status-item">
+                                <i class="fas fa-mobile-alt security-icon enabled"></i>
+                                <div>
+                                    <span class="status-label">2FA:</span>
+                                    <span class="status-value enabled">Включен</span>
+                                </div>
+                            </div>
+                            <div class="status-item">
+                                <i class="fas fa-list security-icon active"></i>
+                                <div>
+                                    <span class="status-label">IP Whitelist:</span>
+                                    <span class="status-value active">Активен</span>
+                                </div>
+                            </div>
+                            <div class="status-item">
+                                <i class="fas fa-history security-icon recent"></i>
+                                <div>
+                                    <span class="status-label">Последний аудит:</span>
+                                    <span class="status-value">2024-01-15</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="risk-level">
+                            <span class="risk-label">Уровень риска:</span>
+                            <span class="risk-value low">Низкий</span>
+                        </div>
+                    </div>
+                    
+                    <div class="security-group">
+                        <h3>Настройки безопасности</h3>
+                        <div class="security-settings">
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span>Требовать 2FA для сделок</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span>Уведомления о входе</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox">
+                                    <span>Автоблокировка при подозрительной активности</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span>Лимиты на вывод средств</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="security-group">
+                        <h3>Журнал аудита</h3>
+                        <div class="audit-log">
+                            <div class="audit-item">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <div>
+                                    <span class="audit-action">Вход в систему</span>
+                                    <span class="audit-time">2024-01-15 14:32:21</span>
+                                    <span class="audit-ip">192.168.1.1</span>
+                                </div>
+                            </div>
+                            <div class="audit-item">
+                                <i class="fas fa-exchange-alt"></i>
+                                <div>
+                                    <span class="audit-action">Сделка выполнена</span>
+                                    <span class="audit-time">2024-01-15 13:45:15</span>
+                                    <span class="audit-details">BTC/USDT +136.42 USDT</span>
+                                </div>
+                            </div>
+                            <div class="audit-item">
+                                <i class="fas fa-cog"></i>
+                                <div>
+                                    <span class="audit-action">Настройки изменены</span>
+                                    <span class="audit-time">2024-01-15 12:20:33</span>
+                                    <span class="audit-details">Риск на сделку: 2% → 2.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settings-content">
+            <div class="settings-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-cog"></i> Настройки</h1>
+                </div>
+                
+                <div class="settings-container">
+                    <!-- Confirmation Icons System -->
+                    <div class="settings-group">
+                        <h3>Активные системы анализа</h3>
+                        <div class="confirmations-section">
+                            <div class="confirmation-icons-grid" id="confirmationIcons">
+                                <!-- Icons will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Basic Risk Management Settings -->
+                    <div class="settings-group">
+                        <h3>Базовые настройки риска</h3>
+                        <div class="settings-sliders">
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Trade Size Percent</span>
+                                    <span class="slider-value" id="tradeSizeValue">3%</span>
+                                </label>
+                                <input type="range" id="tradeSizePercent" class="risk-slider" min="1" max="10" value="3">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>TP SI Ratio</span>
+                                    <span class="slider-value" id="tpSiRatioValue">2</span>
+                                </label>
+                                <input type="range" id="tpSiRatio" class="risk-slider" min="1" max="5" value="2">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Min Take Profit Percent</span>
+                                    <span class="slider-value" id="minTakeProfitValue">2%</span>
+                                </label>
+                                <input type="range" id="minTakeProfit" class="risk-slider" min="0.5" max="10" value="2" step="0.5">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Max Trades Per Hour</span>
+                                    <span class="slider-value" id="maxTradesHourValue">3</span>
+                                </label>
+                                <input type="range" id="maxTradesHour" class="risk-slider" min="1" max="20" value="3">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Max Drawdown Percent</span>
+                                    <span class="slider-value" id="maxDrawdownValue">20%</span>
+                                </label>
+                                <input type="range" id="maxDrawdown" class="risk-slider" min="5" max="50" value="20">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Settings -->
+                    <div class="settings-group">
+                        <h3>Расширенные настройки</h3>
+                        <div class="settings-sliders">
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Stop Loss Distance</span>
+                                    <span class="slider-value" id="stopLossDistanceValue">3%</span>
+                                </label>
+                                <input type="range" id="stopLossDistance" class="risk-slider" min="1" max="10" value="3">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Risk Per Trade</span>
+                                    <span class="slider-value" id="riskPerTradeValue">2%</span>
+                                </label>
+                                <input type="range" id="riskPerTradeAdvanced" class="risk-slider" min="0.5" max="5" value="2" step="0.5">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Minimum Volume Filter</span>
+                                    <span class="slider-value" id="minVolumeValue">1M USDT</span>
+                                </label>
+                                <input type="range" id="minVolumeFilter" class="risk-slider" min="100000" max="10000000" value="1000000" step="100000">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Volatility Threshold</span>
+                                    <span class="slider-value" id="volatilityValue">15%</span>
+                                </label>
+                                <input type="range" id="volatilityThreshold" class="risk-slider" min="5" max="50" value="15">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>RSI Levels</span>
+                                    <span class="slider-value" id="rsiLevelsValue">70</span>
+                                </label>
+                                <input type="range" id="rsiLevels" class="risk-slider" min="50" max="90" value="70">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                            
+                            <div class="slider-setting">
+                                <label class="slider-label">
+                                    <span>Moving Average Period</span>
+                                    <span class="slider-value" id="maValue">20 periods</span>
+                                </label>
+                                <input type="range" id="maPeriod" class="risk-slider" min="5" max="200" value="20">
+                                <div class="slider-track-bg"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Общие настройки</h3>
+                        <div class="setting-item">
+                            <label>Тема интерфейса:</label>
+                            <select class="form-control">
+                                <option value="dark">Темная</option>
+                                <option value="light">Светлая</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Язык:</label>
+                            <select class="form-control">
+                                <option value="ru">Русский</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Уведомления</h3>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span>Уведомления о новых сделках</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span>Уведомления о закрытии позиций</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Trade Details -->
+    <div id="tradeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Детали сделки</h3>
+                <span class="close" id="modalClose">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary" id="modalCancel">Отмена</button>
+                <button class="btn primary" id="modalConfirm">Активировать сделку</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notifications" class="notifications"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
