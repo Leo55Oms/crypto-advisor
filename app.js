@@ -3957,10 +3957,61 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
-// javascript
+// Функция рендеринга мульти-таймфрейм анализа
 function renderMultiTimeframeTable(pair = 'BTC_USDT') {
-    // ... (весь код функции из предыдущего сообщения)
+    const data = tradingData.multi_timeframe_analysis[pair];
+    if (!data) return;
+    
+    const tbody = document.querySelector('#timeframeTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    const timeframes = ['1m', '5m', '1h', '4h', '1d'];
+    timeframes.forEach(tf => {
+        const tfData = data[tf];
+        const row = document.createElement('tr');
+        
+        // Цвет в зависимости от сигнала
+        let signalColor = tfData.signal === 'Бычий' ? '#28a745' : 
+                         tfData.signal === 'Медвежий' ? '#dc3545' : '#6c757d';
+        
+        row.innerHTML = `
+            <td>${tf}</td>
+            <td>${tfData.score}</td>
+            <td style="color: ${signalColor}; font-weight: bold;">${tfData.trend} ${tfData.signal}</td>
+            <td>${tfData.strength}</td>
+        `;
+        tbody.appendChild(row);
+    });
+    
+    // Обновить заголовок
+    const header = document.querySelector('#selectedPairHeader');
+    if (header) {
+        header.textContent = pair.replace('_', '/');
+    }
+    
+    // Обновить рекомендацию
+    const recBlock = document.querySelector('#aiRecommendation');
+    if (recBlock) {
+        const icon = data.consensus === 'Бычий' ? '🟢' : 
+                    data.consensus === 'Медвежий' ? '🔴' : '🟡';
+        recBlock.innerHTML = `${icon} <strong>Консенсус: ${data.consensus} (${data.consensus_count})</strong> - ${data.recommendation}`;
+    }
 }
+
+// Добавить обработчик для селектора
+document.addEventListener('DOMContentLoaded', function() {
+    const assetSelector = document.querySelector('#assetSelector');
+    if (assetSelector) {
+        assetSelector.addEventListener('change', function(e) {
+            renderMultiTimeframeTable(e.target.value);
+        });
+    }
+    
+    // Первоначальный рендер
+    renderMultiTimeframeTable('BTC_USDT');
+});
 function renderMultiTimeframeTable(pair = 'BTC_USDT') {
     const data = tradingData.multi_timeframe_analysis[pair];
     if (!data) return;
