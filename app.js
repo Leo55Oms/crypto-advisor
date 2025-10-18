@@ -44,7 +44,6 @@ const tradingData = {
         }
     },
     
-    
     // Correlation Matrix Data (from instructions)
     correlation_matrix: {
         BTC: {ETH: 0.78, SOL: 0.65, ADA: 0.72},
@@ -3510,9 +3509,12 @@ function updateScanningProgress() {
     }
 }
 
+let scanningFeedActive = true;
+
 function updateScanningFeed() {
     const feedContent = document.getElementById('feedContent');
     if (!feedContent || !scanningFeedActive) return;
+
     
     // Generate new scanning item
     const pairs = ['ATOM/USDT', 'LINK/USDT', 'DOT/USDT', 'UNI/USDT', 'AAVE/USDT', 'MATIC/USDT', 'ADA/USDT', 'SOL/USDT'];
@@ -3955,7 +3957,7 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
-javascript
+// javascript
 function renderMultiTimeframeTable(pair = 'BTC_USDT') {
     // ... (весь код функции из предыдущего сообщения)
 }
